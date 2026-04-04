@@ -1,16 +1,13 @@
-# This is a sample Python script.
+from langchain.chat_models import init_chat_model
+import os
+from dotenv import load_dotenv
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+load_dotenv()
+google_api_key = os.getenv("GOOGLE_API_KEY")
+model = init_chat_model(
+    model="gemini-3-flash-preview",
+    model_provider="google-genai",
+    api_key=google_api_key)
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+response = model.invoke("Are dogs stronger than cats?")
+print(response.content[0]['text'])
